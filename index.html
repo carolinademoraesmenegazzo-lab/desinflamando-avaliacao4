@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avaliação de Inflamação — Desinflamando</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-50:  #E1F5EE;
+      --green-100: #9FE1CB;
+      --green-400: #1D9E75;
+      --green-600: #0F6E56;
+      --green-800: #085041;
+      --amber-50:  #FAEEDA;
+      --amber-600: #BA7517;
+      --coral-50:  #FAECE7;
+      --coral-100: #F5C4B3;
+      --coral-600: #993C1D;
+      --coral-400: #D85A30;
+      --gray-50:   #F7F7F5;
+      --gray-100:  #EFEFED;
+      --gray-200:  #E0DFDC;
+      --gray-400:  #9E9D99;
+      --gray-600:  #5C5C58;
+      --gray-800:  #2C2C2A;
+      --gray-900:  #1A1A18;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+    }
+
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--gray-50);
+      color: var(--gray-800);
+      min-height: 100vh;
+    }
+
+    /* ── LAYOUT ── */
+    .page {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+
+    /* ── LOGO / HEADER ── */
+    .site-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 2.5rem;
+    }
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--green-400);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-mark svg { width: 18px; height: 18px; }
+    .logo-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--gray-800);
+      letter-spacing: -0.02em;
+    }
+    .logo-name span { color: var(--green-400); }
+
+    /* ── CAPA ── */
+    .cover-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--green-600);
+      margin-bottom: 1rem;
+    }
+    .cover-title {
+      font-size: clamp(24px, 5vw, 32px);
+      font-weight: 600;
+      color: var(--gray-900);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: .875rem;
+    }
+    .cover-subtitle {
+      font-size: 15px;
+      color: var(--gray-600);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .cover-divider {
+      height: 1px;
+      background: var(--gray-200);
+      margin-bottom: 2rem;
+    }
+    .cover-section-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-800);
+      margin-bottom: .875rem;
+    }
+
+    /* motivos */
+    .reason-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 2rem; }
+    .reason-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 16px;
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+    }
+    .reason-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--green-50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .reason-icon svg { width: 17px; height: 17px; stroke: var(--green-600); fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    .reason-text strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-800);
+      margin-bottom: 3px;
+    }
+    .reason-text p { font-size: 13px; color: var(--gray-600); line-height: 1.55; }
+
+    /* timeline */
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 2rem;
+    }
+    .tl-item {
+      padding: 14px;
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+    }
+    .tl-moment {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--green-600);
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      margin-bottom: 4px;
+    }
+    .tl-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-800);
+      margin-bottom: 5px;
+    }
+    .tl-desc { font-size: 12px; color: var(--gray-600); line-height: 1.5; }
+
+    /* nota de honestidade */
+    .honest-block {
+      background: var(--green-50);
+      border: 1px solid var(--green-100);
+      border-radius: var(--radius-lg);
+      padding: 1.125rem 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+    .honest-block p { font-size: 13px; color: var(--green-800); line-height: 1.65; }
+    .honest-block p strong { font-weight: 600; }
+
+    /* tempo badge */
+    .time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--gray-600);
+      margin-bottom: 1.75rem;
+    }
+    .time-badge svg { width: 14px; height: 14px; stroke: var(--gray-400); fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* CTA capa */
+    .cta-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 15px;
+      background: var(--green-400);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+      letter-spacing: -0.01em;
+    }
+    .cta-btn:hover { background: var(--green-600); }
+    .cta-btn svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ── QUIZ ── */
+    #quiz-section { display: none; }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--gray-600);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      margin-bottom: 1.75rem;
+      font-family: inherit;
+      transition: color .1s;
+    }
+    .back-btn:hover { color: var(--gray-900); }
+    .back-btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    .quiz-title { font-size: 22px; font-weight: 600; color: var(--gray-900); letter-spacing: -0.02em; margin-bottom: .375rem; }
+    .quiz-subtitle { font-size: 14px; color: var(--gray-600); line-height: 1.6; margin-bottom: 1.75rem; }
+
+    /* identificação */
+    .id-block {
+      background: var(--gray-100);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+    .id-block-label { font-size: 12px; color: var(--gray-600); margin-bottom: .875rem; line-height: 1.5; }
+    .id-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .id-grid.full { grid-template-columns: 1fr; }
+    .field { display: flex; flex-direction: column; gap: 5px; }
+    .field label { font-size: 12px; font-weight: 600; color: var(--gray-600); }
+    .field input {
+      padding: 9px 11px;
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--gray-800);
+      outline: none;
+      transition: border-color .15s;
+      width: 100%;
+    }
+    .field input:focus { border-color: var(--green-400); }
+
+    /* momento */
+    .moment-label { font-size: 13px; color: var(--gray-600); margin-bottom: .625rem; }
+    .moment-select { display: flex; gap: 8px; margin-bottom: 1.75rem; flex-wrap: wrap; }
+    .moment-btn {
+      padding: 8px 16px;
+      border: 1px solid var(--gray-200);
+      border-radius: 999px;
+      background: #fff;
+      font-family: inherit;
+      font-size: 13px;
+      color: var(--gray-600);
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .moment-btn:hover { border-color: var(--green-400); color: var(--green-600); }
+    .moment-btn.active { background: var(--green-50); border-color: var(--green-400); color: var(--green-800); font-weight: 600; }
+
+    /* progresso */
+    .progress-wrap { margin-bottom: 1.75rem; }
+    .progress-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--gray-400); margin-bottom: 6px; }
+    .progress-track { height: 3px; background: var(--gray-200); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--green-400); border-radius: 2px; transition: width .3s ease; width: 0%; }
+
+    /* seção e perguntas */
+    .section-head {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin: 2rem 0 .75rem;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .q-card {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.125rem;
+      margin-bottom: 10px;
+      transition: border-color .15s;
+    }
+    .q-card.answered { border-color: var(--green-100); }
+    .q-text {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-800);
+      line-height: 1.5;
+      margin-bottom: .875rem;
+    }
+    .options { display: flex; flex-direction: column; gap: 5px; }
+    .opt-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background .1s;
+    }
+    .opt-label:hover { background: var(--gray-50); }
+    .opt-label input[type="radio"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 50%;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all .15s;
+      position: relative;
+    }
+    .opt-label input[type="radio"]:checked {
+      border-color: var(--green-400);
+      background: var(--green-400);
+      box-shadow: inset 0 0 0 3px #fff;
+    }
+    .opt-text { font-size: 13px; color: var(--gray-600); line-height: 1.45; transition: color .1s; }
+    .opt-label:has(input:checked) .opt-text { color: var(--gray-800); font-weight: 500; }
+
+    /* aviso */
+    .warning { display: none; font-size: 13px; color: var(--coral-600); background: var(--coral-50); border: 1px solid var(--coral-100); border-radius: var(--radius-sm); padding: 10px 14px; margin-top: 1rem; }
+
+    /* submit */
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      background: var(--green-400);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: background .15s;
+      letter-spacing: -0.01em;
+    }
+    .submit-btn:hover { background: var(--green-600); }
+
+    /* ── RESULTADO ── */
+    #result-box { display: none; margin-top: 2rem; }
+
+    .result-card {
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      border: 1px solid transparent;
+      margin-bottom: 1.25rem;
+    }
+    .result-card.low  { background: var(--green-50); border-color: var(--green-100); }
+    .result-card.mid  { background: var(--amber-50); border-color: #FAC775; }
+    .result-card.high { background: var(--coral-50); border-color: var(--coral-100); }
+
+    .result-level { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: .375rem; }
+    .result-card.low  .result-level { color: var(--green-800); }
+    .result-card.mid  .result-level { color: #633806; }
+    .result-card.high .result-level { color: var(--coral-600); }
+
+    .result-pct { font-size: 13px; margin-bottom: 1.125rem; }
+    .result-card.low  .result-pct { color: var(--green-600); }
+    .result-card.mid  .result-pct { color: var(--amber-600); }
+    .result-card.high .result-pct { color: var(--coral-400); }
+
+    .result-track { height: 7px; background: rgba(0,0,0,.08); border-radius: 4px; overflow: hidden; margin-bottom: 1.25rem; }
+    .result-fill  { height: 100%; border-radius: 4px; transition: width .7s ease; }
+    .result-card.low  .result-fill { background: var(--green-400); }
+    .result-card.mid  .result-fill { background: var(--amber-600); }
+    .result-card.high .result-fill { background: var(--coral-400); }
+
+    .result-desc { font-size: 14px; line-height: 1.7; }
+    .result-card.low  .result-desc { color: var(--green-800); }
+    .result-card.mid  .result-desc { color: #412402; }
+    .result-card.high .result-desc { color: var(--coral-600); }
+
+    /* breakdown */
+    .breakdown-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: .875rem;
+    }
+    .axis-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .axis-row:last-child { border-bottom: none; }
+    .axis-name { font-size: 13px; color: var(--gray-600); width: 130px; flex-shrink: 0; }
+    .axis-track { flex: 1; height: 5px; background: var(--gray-100); border-radius: 3px; overflow: hidden; }
+    .axis-fill  { height: 100%; border-radius: 3px; }
+    .axis-pct   { font-size: 13px; font-weight: 600; color: var(--gray-800); width: 34px; text-align: right; flex-shrink: 0; }
+
+    /* botões resultado */
+    .result-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 1.5rem; }
+    .dl-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px;
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-800);
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+    }
+    .dl-btn:hover { background: var(--gray-100); border-color: var(--gray-400); }
+    .dl-btn svg { width: 16px; height: 16px; stroke: var(--green-600); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .restart-link {
+      font-size: 13px;
+      color: var(--gray-400);
+      text-align: center;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: inherit;
+      width: 100%;
+      padding: 4px;
+      transition: color .1s;
+    }
+    .restart-link:hover { color: var(--gray-800); }
+
+    /* FOOTER */
+    .page-footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--gray-400);
+      margin-top: 3rem;
+      line-height: 1.6;
+    }
+
+    /* Responsivo */
+    @media (max-width: 480px) {
+      .timeline { grid-template-columns: 1fr; }
+      .id-grid  { grid-template-columns: 1fr; }
+      .cover-title { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- CABEÇALHO -->
+  <header class="site-header">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+        <path d="M12 8v4l3 3"/>
+      </svg>
+    </div>
+    <span class="logo-name">Des<span>inflamando</span></span>
+  </header>
+
+  <!-- ═══════════════════════════════ CAPA ═══════════════════════════════ -->
+  <div id="cover-section">
+
+    <p class="cover-eyebrow">Avaliação do aluno</p>
+    <h1 class="cover-title">Antes de começar,<br>vamos medir onde você está.</h1>
+    <p class="cover-subtitle">Este questionário avalia seu nível de inflamação hoje — em 8 eixos do seu corpo e da sua rotina. Ele será reaplicado no meio e no final do curso para que você veja, com dados concretos, o quanto mudou.</p>
+
+    <div class="cover-divider"></div>
+
+    <p class="cover-section-label">Por que estamos fazendo isso?</p>
+    <div class="reason-list">
+      <div class="reason-item">
+        <div class="reason-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="reason-text">
+          <strong>Para você medir seu progresso real</strong>
+          <p>Sensações são subjetivas. Números não mentem. Ao responder agora e ao final, você terá uma comparação concreta do que mudou no seu corpo.</p>
+        </div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="reason-text">
+          <strong>Para o curso fazer sentido para o seu caso</strong>
+          <p>Cada pessoa inflama de um jeito diferente. Seu resultado mostra em quais eixos você tem mais oportunidade de melhora — e onde focar atenção ao longo do curso.</p>
+        </div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div class="reason-text">
+          <strong>Suas respostas são confidenciais</strong>
+          <p>Esses dados são usados exclusivamente para acompanhar sua evolução. Nenhuma resposta é julgada — quanto mais honesta, mais útil o resultado para você.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="cover-section-label">O questionário será aplicado em 3 momentos</p>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-moment">Agora</div>
+        <div class="tl-label">Início do curso</div>
+        <div class="tl-desc">Sua linha de base — o ponto de partida que tornará o progresso visível.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-moment">Módulo 4</div>
+        <div class="tl-label">Meio do curso</div>
+        <div class="tl-desc">Uma checagem de rota — veja o que já mudou e o que ainda precisa de atenção.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-moment">Módulo 8</div>
+        <div class="tl-label">Final do curso</div>
+        <div class="tl-desc">O resultado completo — compare com o início e veja sua transformação em dados.</div>
+      </div>
+    </div>
+
+    <div class="honest-block">
+      <p><strong>Uma observação importante:</strong> não existe resposta certa ou errada aqui. O objetivo não é parecer saudável — é entender onde você realmente está. Respostas honestas geram resultados úteis. Respostas maquiadas geram resultados vazios.</p>
+    </div>
+
+    <div class="time-badge">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Tempo estimado: 5 a 8 minutos
+    </div>
+
+    <button class="cta-btn" onclick="showQuiz()">
+      Começar avaliação
+      <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
+
+  </div><!-- /cover-section -->
+
+
+  <!-- ═══════════════════════════════ QUIZ ═══════════════════════════════ -->
+  <div id="quiz-section">
+
+    <button class="back-btn" onclick="showCover()">
+      <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Voltar à página inicial
+    </button>
+
+    <h1 class="quiz-title">Avaliação de inflamação</h1>
+    <p class="quiz-subtitle">Responda com base em como você tem se sentido nos últimos 7 dias. Não há resposta certa ou errada.</p>
+
+    <!-- Identificação -->
+    <div class="id-block">
+      <p class="id-block-label">Seus dados são usados apenas para comparar sua evolução ao longo do curso e nunca serão compartilhados.</p>
+      <div class="id-grid full" style="margin-bottom:10px">
+        <div class="field">
+          <label for="f-nome">Nome completo</label>
+          <input type="text" id="f-nome" placeholder="Seu nome completo" autocomplete="name">
+        </div>
+      </div>
+      <div class="id-grid" style="margin-bottom:10px">
+        <div class="field">
+          <label for="f-email">E-mail</label>
+          <input type="email" id="f-email" placeholder="seu@email.com" autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="f-idade">Idade</label>
+          <input type="number" id="f-idade" placeholder="Ex: 42" min="18" max="99">
+        </div>
+      </div>
+      <div class="id-grid full">
+        <div class="field">
+          <label for="f-tel">Telefone (WhatsApp)</label>
+          <input type="tel" id="f-tel" placeholder="(47) 99999-9999" autocomplete="tel">
+        </div>
+      </div>
+    </div>
+
+    <!-- Momento -->
+    <p class="moment-label">Em que momento do curso você está respondendo?</p>
+    <div class="moment-select">
+      <button class="moment-btn active" onclick="selectMoment(this,'Início do curso')">Início do curso</button>
+      <button class="moment-btn" onclick="selectMoment(this,'Meio do curso')">Meio do curso</button>
+      <button class="moment-btn" onclick="selectMoment(this,'Final do curso')">Final do curso</button>
+    </div>
+
+    <!-- Progresso -->
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span id="progress-label">0 de 20 perguntas respondidas</span>
+        <span id="progress-pct">0%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+
+    <!-- Perguntas geradas por JS -->
+    <div id="questions-container"></div>
+
+    <div class="warning" id="warning-msg">Responda todas as 24 perguntas antes de calcular o resultado.</div>
+    <button class="submit-btn" onclick="calcResult()">Calcular meu nível de inflamação</button>
+
+    <!-- Resultado -->
+    <div id="result-box">
+      <div class="result-card" id="result-card">
+        <div class="result-level" id="result-level"></div>
+        <div class="result-pct"  id="result-pct"></div>
+        <div class="result-track"><div class="result-fill" id="result-fill"></div></div>
+        <div class="result-desc" id="result-desc"></div>
+      </div>
+
+      <p class="breakdown-label">Resultado por eixo</p>
+      <div id="axis-breakdown"></div>
+
+      <div class="result-actions">
+        <button class="dl-btn" onclick="downloadCSV()">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Baixar resultado em CSV
+        </button>
+        <button class="restart-link" onclick="resetQuiz()">Responder novamente</button>
+      </div>
+    </div>
+
+  </div><!-- /quiz-section -->
+
+  <footer class="page-footer">
+    Desinflamando &mdash; Dr. Victor Paviani &mdash; CRM/SC 10422<br><br>
+    <span style="font-size:11px;color:var(--gray-400);line-height:1.7;display:block;max-width:520px;margin:0 auto;">
+      <strong style="color:var(--gray-600)">Aviso importante:</strong> Este questionário tem finalidade exclusivamente educativa e de acompanhamento do progresso no curso Desinflamando. Não constitui instrumento de diagnóstico médico, não substitui consulta ou avaliação clínica e não deve ser interpretado como orientação terapêutica individualizada. Os resultados apresentados são estimativas baseadas em autorrelato e não possuem valor diagnóstico. Na persistência, agravamento ou surgimento de quaisquer sintomas, procure um médico ou profissional de saúde habilitado. A equipe Desinflamando não se responsabiliza por decisões tomadas com base exclusiva nas informações geradas por este instrumento.
+    </span>
+  </footer>
+
+</div><!-- /page -->
+
+<script>
+  var selectedMoment = 'Início do curso';
+  var TOTAL_Q = 24;
+
+  var sections = [
+    { id:'sono', label:'Sono', questions:[
+      { text:'Como você avalia a qualidade do seu sono na última semana?',
+        options:['Durmo bem, acordo descansado e com energia','Durmo mas nem sempre acordo descansado','Tenho dificuldade para dormir ou acordo cansado frequentemente','Sono muito ruim — não descanso, acordo exausto ou não consigo dormir'] },
+      { text:'Com que frequência você acorda no meio da noite ou tem dificuldade para pegar no sono?',
+        options:['Raramente ou nunca','Às vezes (1–2 vezes na semana)','Com frequência (3–4 vezes na semana)','Quase todos os dias'] },
+      { text:'Quantas horas de sono você costuma dormir por noite?',
+        options:['7 a 9 horas','6 a 7 horas','5 a 6 horas','Menos de 5 horas ou mais de 9 horas'] }
+    ]},
+    { id:'energia', label:'Energia e disposição', questions:[
+      { text:'Como você descreve seu nível de energia ao longo do dia?',
+        options:['Tenho energia estável durante o dia','Tenho picos e quedas, mas me sinto bem no geral','Sinto cansaço frequente, especialmente à tarde','Fadiga constante — acordo cansado e fico cansado o dia todo'] },
+      { text:'Você precisa de café, açúcar ou estimulantes para funcionar durante o dia?',
+        options:['Não — consigo funcionar bem sem eles','Às vezes, mas não é uma dependência','Sim, especialmente de manhã ou após o almoço','Sim, o dia todo — sem isso não consigo funcionar'] }
+    ]},
+    { id:'digestao', label:'Digestão e intestino', questions:[
+      { text:'Como está seu funcionamento intestinal nos últimos dias?',
+        options:['Regular, sem desconforto','Leve constipação (intestino preso) ou irregularidade sem incômodo significativo','Constipado (intestino preso) ou com diarreia recorrente','Muito irregular — constipação (intestino preso), diarreia, alternância ou dores abdominais frequentes'] },
+      { text:'Você sente inchaço abdominal, gases excessivos ou estufamento?',
+        options:['Raramente ou nunca','Às vezes, sem grande impacto','Com frequência, especialmente após as refeições','Diariamente — é um desconforto constante'] },
+      { text:'Você tem azia, gastrite, refluxo ou desconforto gástrico frequente?',
+        options:['Não','Raramente','Com alguma frequência','Sim, é algo recorrente na minha rotina'] }
+    ]},
+    { id:'dor', label:'Dor e inflamação física', questions:[
+      { text:'Você sente dores no corpo (articulações, músculos, cabeça) com frequência?',
+        options:['Raramente ou nunca','Às vezes, geralmente com causa clara (esforço físico, postura)','Com frequência, mesmo sem causa aparente','Tenho dores constantes ou crônicas — articulações, fibromialgia, enxaqueca'] },
+      { text:'Você nota inchaço visível no rosto, pernas ou abdômen ao acordar?',
+        options:['Não','Eventualmente','Sim, algumas vezes na semana','Sim, quase diariamente'] }
+    ]},
+    { id:'humor', label:'Humor, estresse e cognição', questions:[
+      { text:'Como você avalia seu nível de estresse e equilíbrio emocional no último mês?',
+        options:['Estável — consigo lidar bem com os desafios','Alguns momentos de tensão mas sem grande impacto','Estresse frequente que afeta meu humor e produtividade','Estresse crônico ou intenso — sinto que estou no limite'] },
+      { text:'Você tem dificuldade de concentração, clareza mental ou memória (névoa mental)?',
+        options:['Não — meu foco e clareza são bons','Às vezes, especialmente em dias mais cansativos','Com frequência — tenho dificuldade para me concentrar ou lembrar de coisas','Diariamente — névoa mental é algo constante na minha rotina'] },
+      { text:'Com que frequência você se sente irritado, ansioso ou com humor instável?',
+        options:['Raramente','Às vezes, associado a situações pontuais','Com frequência, sem razão clara','Quase sempre — irritabilidade e ansiedade são constantes'] }
+    ]},
+    { id:'pele', label:'Pele, cabelo e imunidade', questions:[
+      { text:'Como está a saúde da sua pele (acne, dermatite, opacidade, vermelhidão)?',
+        options:['Pele saudável e sem queixas','Alterações leves e eventuais','Acne, dermatite ou irregularidades frequentes','Problemas crônicos de pele que me incomodam bastante'] },
+      { text:'Você nota queda de cabelo ou unhas frágeis com frequência?',
+        options:['Não','Queda leve e eventual','Queda perceptível e frequente','Queda intensa — é preocupante para mim'] },
+      { text:'Com que frequência você adoece (gripes, infecções, alergias)?',
+        options:['Raramente — minha imunidade é boa','1 a 2 vezes por ano','3 a 4 vezes por ano','Com muita frequência — minha imunidade parece sempre baixa'] }
+    ]},
+    { id:'alimentacao', label:'Alimentação e hábitos', questions:[
+      { text:'Com que frequência você consome ultraprocessados (salgadinhos, embutidos, fast food, biscoitos recheados)?',
+        options:['Raramente ou nunca','1 a 2 vezes por semana','3 a 5 vezes por semana','Diariamente ou quase todos os dias'] },
+      { text:'Como você avalia o consumo de açúcar, refrigerantes, doces e sucos industrializados?',
+        options:['Consumo muito pouco ou não consumo','Consumo ocasionalmente','Consumo algumas vezes por semana','Consumo diariamente'] },
+      { text:'Você consome regularmente vegetais, frutas, leguminosas e alimentos naturais?',
+        options:['Sim, em pelo menos 2 refeições por dia','Sim, mas poderia ser mais frequente','Às vezes — a alimentação é irregular','Raramente — minha alimentação é pouco variada e pouco natural'] }
+    ]},
+    { id:'peso', label:'Peso e metabolismo', questions:[
+      { text:'Você tem dificuldade de perder peso mesmo tentando comer melhor?',
+        options:['Não tenho essa dificuldade','Tenho alguma dificuldade mas consigo progredir','Sim, é muito difícil mesmo com mudanças na alimentação','Sim, extremamente difícil — parece que nada funciona'] },
+      { text:'Você sente sensação de inchaço ou retenção de líquidos com frequência?',
+        options:['Não','Às vezes','Com frequência','Quase sempre — é um desconforto constante'] },
+      { text:'Você sente fome logo após as refeições ou tem dificuldade de se sentir saciado?',
+        options:['Não — fico satisfeito após as refeições','Às vezes sinto fome mais cedo do que deveria','Com frequência — a saciedade não dura muito','Quase sempre — tenho fome constante, mesmo tendo comido'] },
+      { text:'Você sente queda de energia ou sonolência intensa após as refeições?',
+        options:['Raramente ou nunca','Às vezes, especialmente após refeições mais pesadas','Com frequência, após a maioria das refeições','Sempre — é algo que impacta minha produtividade diariamente'] }
+    ]}
+  ];
+
+  function showQuiz() {
+    document.getElementById('cover-section').style.display = 'none';
+    document.getElementById('quiz-section').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showCover() {
+    document.getElementById('cover-section').style.display = 'block';
+    document.getElementById('quiz-section').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function selectMoment(btn, val) {
+    selectedMoment = val;
+    document.querySelectorAll('.moment-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+
+  function buildQuestions() {
+    var c = document.getElementById('questions-container');
+    var html = '';
+    var qi = 0;
+    sections.forEach(function(s) {
+      html += '<div class="section-head">' + s.label + '</div>';
+      s.questions.forEach(function(q) {
+        qi++;
+        html += '<div class="q-card" id="qcard' + qi + '">';
+        html += '<div class="q-text">' + qi + '. ' + q.text + '</div>';
+        html += '<div class="options">';
+        q.options.forEach(function(opt, oi) {
+          html += '<label class="opt-label">';
+          html += '<input type="radio" name="q' + qi + '" value="' + oi + '" onchange="onAnswer(' + qi + ')">';
+          html += '<span class="opt-text">' + opt + '</span>';
+          html += '</label>';
+        });
+        html += '</div></div>';
+      });
+    });
+    c.innerHTML = html;
+  }
+
+  function onAnswer(qi) {
+    document.getElementById('qcard' + qi).classList.add('answered');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    var answered = 0;
+    for (var i = 1; i <= TOTAL_Q; i++) {
+      if (document.querySelector('input[name="q' + i + '"]:checked')) answered++;
+    }
+    var pct = Math.round(answered / TOTAL_Q * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-label').textContent = answered + ' de ' + TOTAL_Q + ' perguntas respondidas';
+    document.getElementById('progress-pct').textContent = pct + '%';
+  }
+
+  function calcResult() {
+    var warn = document.getElementById('warning-msg');
+    var allAnswered = true;
+    for (var i = 1; i <= TOTAL_Q; i++) {
+      if (!document.querySelector('input[name="q' + i + '"]:checked')) { allAnswered = false; break; }
+    }
+    if (!allAnswered) { warn.style.display = 'block'; warn.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); return; }
+    warn.style.display = 'none';
+
+    var axisScores = {};
+    var totalScore = 0;
+    var totalMax = 0;
+    var qi = 0;
+
+    sections.forEach(function(s) {
+      var axisScore = 0;
+      var axisMax = s.questions.length * 3;
+      s.questions.forEach(function() {
+        qi++;
+        var val = parseInt(document.querySelector('input[name="q' + qi + '"]:checked').value);
+        axisScore += val;
+        totalScore += val;
+      });
+      axisScores[s.id] = { label: s.label, score: axisScore, max: axisMax };
+      totalMax += axisMax;
+    });
+
+    var pct = Math.round(totalScore / totalMax * 100);
+    var level, desc, cls, barColor;
+
+    if (pct <= 25) {
+      level = 'Pouco inflamado';
+      desc = 'Seus indicadores mostram um organismo com inflamação controlada. Isso não significa que não há espaço para melhora — mas seu ponto de partida é favorável. Ao longo do curso, o objetivo é consolidar e aprofundar os hábitos que já estão funcionando para você.';
+      cls = 'low';
+    } else if (pct <= 55) {
+      level = 'Inflamação moderada';
+      desc = 'Você apresenta sinais consistentes de inflamação sistêmica em alguns eixos. Isso é comum e reversível — mas exige atenção. O Desinflamando foi desenhado exatamente para esse perfil: você já sente que algo não está funcionando bem, e agora vai entender por quê e o que fazer a respeito.';
+      cls = 'mid';
+    } else {
+      level = 'Inflamação significativa';
+      desc = 'Seus indicadores apontam para um nível elevado de inflamação crônica em múltiplos eixos. A boa notícia é que a inflamação responde rápido a mudanças. O curso foi desenhado para agir exatamente nos pontos que seu questionário revelou. Comprometa-se com o processo — o resultado vai aparecer.';
+      cls = 'high';
+    }
+
+    var rc = document.getElementById('result-card');
+    rc.className = 'result-card ' + cls;
+    document.getElementById('result-level').textContent = level;
+    document.getElementById('result-pct').textContent = 'Pontuação: ' + totalScore + ' de ' + totalMax + ' pontos (' + pct + '% de inflamação estimada)';
+    document.getElementById('result-fill').style.width = pct + '%';
+    document.getElementById('result-desc').textContent = desc;
+
+    var abColors = { low: '#1D9E75', mid: '#BA7517', high: '#D85A30' };
+    var abHtml = '';
+    Object.values(axisScores).forEach(function(a) {
+      var ap = Math.round(a.score / a.max * 100);
+      var ac = ap <= 33 ? '#1D9E75' : ap <= 66 ? '#BA7517' : '#D85A30';
+      abHtml += '<div class="axis-row">';
+      abHtml += '<span class="axis-name">' + a.label + '</span>';
+      abHtml += '<div class="axis-track"><div class="axis-fill" style="width:' + ap + '%;background:' + ac + '"></div></div>';
+      abHtml += '<span class="axis-pct">' + ap + '%</span>';
+      abHtml += '</div>';
+    });
+    document.getElementById('axis-breakdown').innerHTML = abHtml;
+
+    document.getElementById('result-box').style.display = 'block';
+    document.getElementById('result-box').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function downloadCSV() {
+    var nome  = document.getElementById('f-nome').value  || '';
+    var email = document.getElementById('f-email').value || '';
+    var idade = document.getElementById('f-idade').value || '';
+    var tel   = document.getElementById('f-tel').value   || '';
+    var now   = new Date().toLocaleString('pt-BR');
+    var level = document.getElementById('result-level').textContent;
+    var pctTxt = document.getElementById('result-pct').textContent;
+
+    var rows = [['Momento','Nome','E-mail','Idade','Telefone','Data/Hora','Nível','Pontuação']];
+    rows.push([selectedMoment, nome, email, idade, tel, now, level, pctTxt]);
+
+    var details = [['Momento','Nome','Eixo','Pergunta','Resposta selecionada']];
+    var qi = 0;
+    sections.forEach(function(s) {
+      s.questions.forEach(function(q) {
+        qi++;
+        var el = document.querySelector('input[name="q' + qi + '"]:checked');
+        var resp = el ? q.options[parseInt(el.value)] : '';
+        details.push([selectedMoment, nome, s.label, q.text, resp]);
+      });
+    });
+
+    function toCSV(data) {
+      return data.map(function(row) {
+        return row.map(function(cell) {
+          return '"' + String(cell).replace(/"/g, '""') + '"';
+        }).join(',');
+      }).join('\r\n');
+    }
+
+    var csv = toCSV(rows) + '\r\n\r\n' + toCSV(details);
+    var blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'desinflamando_avaliacao_' + selectedMoment.replace(/ /g, '_') + '_' + (nome.split(' ')[0] || 'aluno') + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function resetQuiz() {
+    document.getElementById('result-box').style.display = 'none';
+    buildQuestions();
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  buildQuestions();
+</script>
+
+</body>
+</html>
